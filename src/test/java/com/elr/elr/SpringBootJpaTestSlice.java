@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Commit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -15,24 +16,23 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 
 /*
- * el test @DataJpaTest __No__toma los valores bootstrap.DataInitializer hace el insert de los dos registros de
- * ejemplo
+ * el test @DataJpaTest __SI__toma los valores bootstrap.DataInitializer hace el insert de los dos registros de
+ * ejemplo por esto @ComponentScan(basePackages = {"com.elr.elr.bootstrap"})
  * */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //ejecuta los    @Order(1) y    @Order(2)
 @DataJpaTest
+@ComponentScan(basePackages = {"com.elr.elr.bootstrap"})
 public class SpringBootJpaTestSlice {
 
     @Autowired
     BookRepository bookRepository;
 
-    //@Commit Para que tome los valores del testJpaTestSplice en el testJpaTestSpliceTransaction
-    //de lo contrario cada test se ejecuta independientemente
     @Commit
     @Order(1)
     @Test
     void testJpaTestSplice() {
         long countBefore = bookRepository.count();
-        assertThat(countBefore).isEqualTo(0);
+        assertThat(countBefore).isEqualTo(2);
 
         bookRepository.save(new Book("My Book", "1235555", "Self"));
 
@@ -45,6 +45,7 @@ public class SpringBootJpaTestSlice {
     @Test
     void testJpaTestSpliceTransaction() {
         long countBefore = bookRepository.count();
-        assertThat(countBefore).isEqualTo(1);
+        assertThat(countBefore).isEqualTo(3);
+
     }
 }
