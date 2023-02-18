@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+/*
+* el test @SpringBootTest toma los valores bootstrap.DataInitializer hace el inser de los dos registros de
+* ejemplo
+* */
 @SpringBootTest
 class ElrApplicationTests {
 
