@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Commit;
@@ -22,6 +23,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) //ejecuta los    @Order(1) y    @Order(2)
 @DataJpaTest
 @ComponentScan(basePackages = {"com.elr.elr.bootstrap"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //anula la cong de db en memoria de @DataJpaTest
 public class SpringBootJpaTestSlice {
 
     @Autowired
