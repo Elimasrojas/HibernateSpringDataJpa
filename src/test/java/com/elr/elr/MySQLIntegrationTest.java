@@ -29,8 +29,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 * */
 @ActiveProfiles("local")
 @DataJpaTest
-@ComponentScan(basePackages = {"guru.springframework.sdjpaintro.bootstrap"})
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) //anula la cong de db en memoria de @DataJpaTest
+@ComponentScan(basePackages = {"com.elr.elr.bootstrap"})
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class MySQLIntegrationTest {
 
     @Autowired
