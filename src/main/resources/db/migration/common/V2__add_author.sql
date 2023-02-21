@@ -1,5 +1,4 @@
 drop table if exists author;
-drop table if exists author_seq;
 
 create table author (
    id bigint not null,
@@ -8,8 +7,3 @@ create table author (
    primary key (id)
 ) engine=InnoDB;
 
-create table author_seq (
-    next_val bigint
-) engine=InnoDB;
-
-insert into author_seq values ( 1 );
