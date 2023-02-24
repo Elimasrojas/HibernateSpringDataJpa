@@ -1,7 +1,11 @@
 package com.elr.elr.bootstrap;
 
+import com.elr.elr.domain.AuthorUuid;
 import com.elr.elr.domain.Book;
+import com.elr.elr.domain.BookUuid;
+import com.elr.elr.repositories.AuthorUuidRepository;
 import com.elr.elr.repositories.BookRepository;
+import com.elr.elr.repositories.BookUuidRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -11,25 +15,43 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements CommandLineRunner {
 
     private final BookRepository bookRepository;
+    private final AuthorUuidRepository authorUuidRepository;
+    private final BookUuidRepository bookUuidRepository;
 
-    public DataInitializer(BookRepository bookRepository) {
+
+    public DataInitializer(BookRepository bookRepository, AuthorUuidRepository authorUuidRepository,BookUuidRepository bookUuidRepository) {
         this.bookRepository = bookRepository;
+        this.authorUuidRepository = authorUuidRepository;
+        this.bookUuidRepository=bookUuidRepository;
+
     }
 
     @Override
     public void run(String... args) throws Exception {
         bookRepository.deleteAll();
+        authorUuidRepository.deleteAll();
 
-        Book bookDDD = new Book("Domain Driven Design", "123", "RandomHouse",null);
+        Book bookDDD = new Book("Domain Driven Design", "123", "RandomHouse", null);
         Book savedDDD = bookRepository.save(bookDDD);
 
-        Book bookSIA = new Book("Spring In Action", "234234", "Oriely",null);
+        Book bookSIA = new Book("Spring In Action", "234234", "Oriely", null);
         Book savedSIA = bookRepository.save(bookSIA);
 
         bookRepository.findAll().forEach(book -> {
             System.out.println("Book Id: " + book.getId());
             System.out.println("Book Title: " + book.getTitle());
         });
+
+        AuthorUuid authorUuid = new AuthorUuid();
+        authorUuid.setFirstName("Joe");
+        authorUuid.setLastName("Buck");
+        AuthorUuid savedAuthor = authorUuidRepository.save(authorUuid);
+        System.out.println("Saved Author UUID: " + savedAuthor.getId() );
+
+        BookUuid bookUuid = new BookUuid();
+        bookUuid.setTitle("All About UUIDs");
+        BookUuid savedBookUuid = bookUuidRepository.save(bookUuid);
+        System.out.println("Saved Book UUID: " + savedBookUuid.getId());
 
     }
 }
